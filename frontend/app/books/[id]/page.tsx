@@ -15,6 +15,7 @@ import {
 } from 'lucide-react'
 import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
+import Cookies from 'js-cookie'
 
 type Props = {
   params: {
@@ -60,6 +61,7 @@ const page = ({ params: { id } }: Props) => {
         book_id: bookDetails?.book_id,
         payment_method: 'COD',
         shipping_address: location,
+        jwt: `${Cookies.get('jwt')}`,
       }),
     })
     const data = await res.json()

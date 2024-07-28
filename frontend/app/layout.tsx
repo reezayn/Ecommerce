@@ -22,6 +22,30 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        {/* Meta Description  */}
+        <meta
+          name="description"
+          content="Discover BookBounty, your go-to online marketplace for buying and selling new and like-new books. Find great deals or list your books for sale in a community of book lovers!"
+        />
+        {/* Meta Keyword  */}
+        <meta
+          name="keywords"
+          content="BookBounty, buy books, sell books, used books, new books, online bookstore, book marketplace"
+        />
+        {/* Open graphs tag  */}
+        <meta
+          property="og:title"
+          content="BookBounty | Buy and Sell Books Online"
+        />
+        <meta
+          property="og:description"
+          content="Join BookBounty to trade new and like-new books with a vibrant community of readers. Buy or sell your books today!"
+        />
+        <meta property="og:image" content="URL_to_an_image_showcasing_books" />
+        <meta property="og:url" content="https://www.bookbounty.com" />
+        <meta property="og:type" content="website" />
+      </head>
       <body className={poppins.className}>
         <CustomProvider>
           <Navbar />

@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label'
 import Link from 'next/link'
 import { Textarea } from '@/components/ui/textarea'
 import { Listing } from '@/types'
+import Cookies from 'js-cookie'
 
 const page = () => {
   const [bookData, setBookData] = useState<Listing>({
@@ -25,6 +26,7 @@ const page = () => {
 
   const submit = async (e: React.SyntheticEvent) => {
     e.preventDefault() // Prevent default form submission behavior
+    const token = Cookies.get('jwt')
 
     const formData = new FormData()
     formData.append('title', bookData.title ?? '') // Use the nullish coalescing operator to default to an empty string if undefined
@@ -41,10 +43,14 @@ const page = () => {
     if (bookData.image) {
       formData.append('image', bookData.image)
     }
+    formData.append('jwt', token ?? '')
 
     const res = await fetch('http://127.0.0.1:8000/api/books/', {
       method: 'POST',
       credentials: 'include',
+      // body: JSON.stringify({
+      //   jwt: `${Cookies.get('jwt')}`,
+      // }),
       body: formData,
     })
     const data = await res.json()

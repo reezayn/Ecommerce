@@ -8,6 +8,7 @@ import { Label } from '@radix-ui/react-label'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
+import Cookies from 'js-cookie'
 
 const Login = () => {
   const [loginSuccess, setLoginSuccess] = useState(false)
@@ -38,6 +39,7 @@ const Login = () => {
 
     if (res.ok) {
       setMessage('Log in successful')
+      Cookies.set('jwt', data.jwt)
       setLoginSuccess(true)
       setIsLoggedIn(true)
       await router.push('/')
@@ -58,7 +60,7 @@ const Login = () => {
         <h3 className={`${loginSuccess ? 'text-green-500' : 'text-red-500'}`}>
           {message}
         </h3>
-        
+
         <div className="grid w-full max-w-sm items-center gap-1.5 my-3">
           <Label htmlFor="email">Email</Label>
           <Input

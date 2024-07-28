@@ -3,6 +3,8 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { convertImageUrl } from '@/lib'
+import Cookies from 'js-cookie'
+
 const OrdersPage = () => {
   interface Book {
     book_id: number
@@ -34,10 +36,13 @@ const OrdersPage = () => {
 
   const fetchOrders = async () => {
     const res = await fetch('http://127.0.0.1:8000/api/userorders/', {
-      method: 'GET',
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
+      body: JSON.stringify({
+        jwt: `${Cookies.get('jwt')}`,
+      }),
       credentials: 'include',
     })
 

@@ -1,5 +1,6 @@
 'use client'
 import { createContext, useState, ReactNode, useEffect } from 'react'
+import Cookies from 'js-cookie'
 
 export const IsLoggedInContext = createContext<
   [boolean, (isLoggedIn: boolean) => void]
@@ -15,7 +16,14 @@ export const CustomProvider: React.FC<CustomProviderProps> = ({ children }) => {
   useEffect(() => {
     ;(async () => {
       const response = await fetch('http://127.0.0.1:8000/api/user', {
+        method: 'POST',
         credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          jwt: `${Cookies.get('jwt')}`,
+        }),
       })
       const data = await response.json()
       if (!data.detail) {
@@ -24,7 +32,7 @@ export const CustomProvider: React.FC<CustomProviderProps> = ({ children }) => {
         setIsLoggedIn(false)
       }
     })()
-  }, [isLoggedIn])
+  }, [])
 
   return (
     <IsLoggedInContext.Provider value={[isLoggedIn, setIsLoggedIn]}>

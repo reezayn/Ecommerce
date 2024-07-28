@@ -42,15 +42,16 @@ class LoginView(APIView):
 
         response = Response()
 
-        response.set_cookie(key='jwt',value=token,httponly=True)
+        # response.set_cookie(key='jwt',value=token,httponly=True)
         response.data={
             'jwt': token
         }
         return response
     
 class UserView(APIView):
-    def get(self, request):
-        token = request.COOKIES.get('jwt')
+    def post(self, request):
+        token = request.data['jwt']
+        # token = request.COOKIES.get('jwt')
 
         if not token:
             raise AuthenticationFailed('Unauthenticated!')
@@ -82,7 +83,8 @@ class BookListAPIView(APIView):
 
 
     def post(self, request, format=None):
-        token = request.COOKIES.get('jwt')
+        # token = request.COOKIES.get('jwt')
+        token = request.data['jwt']
 
         if not token:
             raise AuthenticationFailed('Unauthenticated!')
@@ -119,7 +121,8 @@ class LogoutView(APIView):
 class OrderAPIView(APIView):
     def post(self, request, format=None):
 
-        token = request.COOKIES.get('jwt')
+        # token = request.COOKIES.get('jwt')
+        token = request.data['jwt']
 
         if not token:
             raise AuthenticationFailed('Unauthenticated!')
@@ -155,8 +158,9 @@ class OrderAPIView(APIView):
     
 
 class UserOrdersAPIView(APIView):
-    def get(self, request, format=None):
-        token = request.COOKIES.get('jwt')
+    def post(self, request, format=None):
+        # token = request.COOKIES.get('jwt')
+        token = request.data['jwt']
 
         if not token:
             raise AuthenticationFailed('Unauthenticated!')
@@ -174,9 +178,10 @@ class UserOrdersAPIView(APIView):
         return Response(serializer.data)
 
 class ListingsAPIView(APIView):
-    def get(self, request, format=None):
+    def post(self, request, format=None):
 
-        token = request.COOKIES.get('jwt')
+        # token = request.COOKIES.get('jwt')
+        token = request.data['jwt']
 
         if not token:
             raise AuthenticationFailed('Unauthenticated!')

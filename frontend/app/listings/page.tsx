@@ -5,6 +5,8 @@ import { convertImageUrl } from '@/lib'
 import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
+import Cookies from 'js-cookie'
+
 const ListingsPage = () => {
   interface BookCardProps {
     book: Book
@@ -15,10 +17,13 @@ const ListingsPage = () => {
   useEffect(() => {
     const fetchBooks = async () => {
       const response = await fetch('http://127.0.0.1:8000/api/userlistings/', {
-        method: 'GET',
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
+        body: JSON.stringify({
+          jwt: `${Cookies.get('jwt')}`,
+        }),
         credentials: 'include',
       })
       const data = await response.json()
